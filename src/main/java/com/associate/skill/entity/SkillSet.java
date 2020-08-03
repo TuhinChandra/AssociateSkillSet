@@ -6,6 +6,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -42,6 +43,7 @@ public class SkillSet {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
+	@JoinColumn(name = "ASSOCIATE_ID")
 	private Associate associate;
 
 	public SkillSet(final String skill, final SkillType type, final ExperienceType experienceType,

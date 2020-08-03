@@ -7,8 +7,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -27,10 +30,16 @@ public class Associate {
 	private long id;
 	@OneToOne(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private PersonalDetails personalDetails;
-	@OneToMany(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ASSOCIATE_ID")
+	@Where(clause = "TYPE = 'PRIMARY'")
 	private Set<SkillSet> primarySkills = new HashSet<>();
-	@OneToMany(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ASSOCIATE_ID")
+	@Where(clause = "TYPE = 'SECONDARY'")
 	private Set<SkillSet> secondarySkills = new HashSet<>();
-	@OneToMany(mappedBy = "associate", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "ASSOCIATE_ID")
+	@Where(clause = "TYPE = 'ASPIRATION'")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<SkillSet> aspirations = new HashSet<>();
 }
